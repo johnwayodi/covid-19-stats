@@ -4,9 +4,7 @@
 
 ```Note
 
-These instructions will get you a copy of the project up and running on
-your local machine for development and testing purposes. And including
-Project structure and coding standard, please review it seriously.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 ```
 
 ## 🔨 Prerequisites
@@ -15,6 +13,13 @@ Project structure and coding standard, please review it seriously.
 - typescript >= 3.0
 - yarn >= 1.14.0 or npm >= 6.7.0
 - git >= 2.10.1
+
+## 🔧 Features
+
+- [ ] Global statistics.
+- [ ] Country statistics.
+- [ ] Graphical & Chart representations.
+- [ ] Rss integration.
 
 ## 🔧 Development Tools
 
@@ -30,16 +35,15 @@ Project structure and coding standard, please review it seriously.
 
 Install the packages
 
-### `yarn start`
+### `yarn start:local`
 
-Runs the app in the development mode.Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in local mode.Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits. You will also see any lint errors in the console.
 
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `yarn build:prod`
 
