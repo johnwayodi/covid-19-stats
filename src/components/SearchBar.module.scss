@@ -1,0 +1,30 @@
+.searchSection {
+  height: 80px;
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  padding: 0 32px;
+}
+
+.searchBar {
+  flex-grow: 1;
+  display: flex;
+}
+
+.sortSection {
+  align-self: flex-end;
+}
+
+.sortText {
+  padding-top: 4px;
+  padding-right: 4px;
+}
+
+.select {
+  width: 244px;
+}
+
+.searchInput {
+  width: 300px;
+  text-align: left;
+}
