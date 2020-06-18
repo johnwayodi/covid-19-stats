@@ -1,5 +1,4 @@
 .searchSection {
-  height: 80px;
   display: flex;
   width: 100%;
   height: fit-content;
@@ -13,6 +12,7 @@
 
 .sortSection {
   align-self: flex-end;
+  // padding-right: 16px;
 }
 
 .sortText {

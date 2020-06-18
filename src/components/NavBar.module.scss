@@ -4,6 +4,8 @@
   display: flex;
   width: 100%;
   flex-direction: row;
+  background-color: white;
+  padding-right: 32px;
 
   @include respond-to('xs-l') {
     flex-direction: column;
@@ -13,12 +15,12 @@
 .navTitle {
   flex-grow: 1;
   align-content: center;
-  padding-left: 16px;
+  padding-left: 32px;
   background-color: whitesmoke;
 }
 
 .navMenu {
   align-self: flex-end;
-  width: 100%;
+  width: fit-content;
   height: fit-content;
 }
