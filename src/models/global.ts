@@ -25,10 +25,26 @@ export interface GlobalSummary {
   totalRecovered: number;
 }
 
+export interface CountryDailyStat {
+  active: number;
+  city?: string;
+  cityCode?: string;
+  confirmed: number;
+  country: string;
+  countryCode: string;
+  date: string;
+  deaths: 100;
+  lat: string;
+  lon: string;
+  province?: string;
+  recovered: number;
+}
+
 export interface GlobalState {
   summary: GlobalSummary;
   countries: CountrySummary[];
   searchResults: CountrySummary[];
+  countrySummary: CountryDailyStat[];
   date: string;
 }
 
@@ -43,6 +59,7 @@ const initialState: GlobalState = {
   },
   countries: [],
   searchResults: [],
+  countrySummary: [],
   date: '',
 };
 
@@ -100,6 +117,27 @@ export default {
         console.log('ERROR', error);
       }
     },
+    *fetchCountrySummary({ payload }: Action, { call, put }: Effects) {
+      const { slug } = payload;
+      try {
+        const response = yield call(ApiService.getCountrySummary, slug);
+        if (response) {
+          const data: any = humps.camelizeKeys(response);
+          console.log('Country Data', data);
+          // const { global, countries } = data;
+          yield put({
+            type: 'setCountryResult',
+            payload: data,
+          });
+          // yield put({
+          //   type: 'setCountries',
+          //   payload: orderBy(countries, ['totalDeaths'], ['desc']),
+          // });
+        }
+      } catch (error) {
+        console.log('ERROR', error);
+      }
+    },
   },
   reducers: {
     setSummary(state: GlobalState, { payload }: Action): GlobalState {
@@ -111,6 +149,9 @@ export default {
     },
     setSearchResult(state: GlobalState, { payload }: Action): GlobalState {
       return { ...state, searchResults: payload };
+    },
+    setCountryResult(state: GlobalState, { payload }: Action): GlobalState {
+      return { ...state, countrySummary: payload };
     },
   },
 };

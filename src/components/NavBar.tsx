@@ -13,12 +13,15 @@ const NavBar: FC = () => {
       <Row className={styles.navTitle}>
         <Title level={4}>Covid-19 Statistics</Title>
       </Row>
-      <Row>
-        <Menu className={styles.navMenu} selectedKeys={['mail']} mode="horizontal">
+      <Row className={styles.navMenu}>
+        <Menu selectedKeys={['mail']} mode="horizontal">
           <Menu.Item key="mail" icon={<MailOutlined />}>
-            Feed
+            Summary
           </Menu.Item>
-          <SubMenu icon={<SettingOutlined />} title="More Info">
+          <Menu.Item key="app" icon={<AppstoreOutlined />}>
+            About
+          </Menu.Item>
+          <SubMenu icon={<SettingOutlined />} title="Settings">
             <Menu.ItemGroup title="Item 1">
               <Menu.Item key="setting:1">Option 1</Menu.Item>
               <Menu.Item key="setting:2">Option 2</Menu.Item>
@@ -28,9 +31,6 @@ const NavBar: FC = () => {
               <Menu.Item key="setting:4">Option 4</Menu.Item>
             </Menu.ItemGroup>
           </SubMenu>
-          <Menu.Item key="app" icon={<AppstoreOutlined />}>
-            About
-          </Menu.Item>
         </Menu>
       </Row>
     </Row>

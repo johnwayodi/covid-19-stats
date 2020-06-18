@@ -1,32 +1,40 @@
 import React, { FC } from 'react';
 import { Layout } from 'antd';
 import { connect } from 'dva';
+import { Redirect, Route, routerRedux, Switch } from 'dva/router';
 import { Dispatch } from './models/dispatch';
-import AppRoutes from './routes/AppRoutes';
 
-import styles from './App.module.scss';
+import Home from './pages/Home';
+import Country from './components/Country';
 import NavBar from './components/NavBar';
 
-const { Header, Content } = Layout;
+import styles from './App.module.scss';
 
 interface Props {
   app: any;
-  global: any;
   history: any;
+  global: any;
 }
 
-const App: FC<Props> = (props) => {
-  const { app } = props;
+const { Header, Content } = Layout;
+const { ConnectedRouter } = routerRedux;
 
+const App: FC<Props> = ({ history }) => {
   return (
-    <Layout className={styles.container}>
-      <Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: 0 }}>
-        <NavBar />
-      </Header>
-      <Content className={styles.content}>
-        <AppRoutes app={app} />
-      </Content>
-    </Layout>
+    <ConnectedRouter history={history}>
+      <Layout className={styles.container}>
+        <Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: 0 }}>
+          <NavBar />
+        </Header>
+        <Content className={styles.content}>
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/summary" push />} />
+            <Route exact path="/summary" render={() => <Home />} />
+            <Route exact path="/summary/:slug" render={() => <Country />} />
+          </Switch>
+        </Content>
+      </Layout>
+    </ConnectedRouter>
   );
 };
 

@@ -5,7 +5,7 @@ import React from 'react';
 import { createLogger } from 'redux-logger';
 import { __DEV__ } from './env';
 import { default as Global } from './models/global';
-import Page from './Page';
+import App from './App';
 
 import './index.scss';
 
@@ -31,7 +31,7 @@ const app: any = dva({
 
 app.use(createLoading());
 
-app.router((props: any) => <Page {...props} />);
+app.router((props: any) => <App {...props} />);
 
 // Register dva global model
 app.model(Global);

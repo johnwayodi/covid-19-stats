@@ -1,12 +1,12 @@
 export enum EnvType {
-  Local = "local",
-  Development = "development",
-  Production = "production",
-  Staging = "staging",
+  Local = 'local',
+  Development = 'development',
+  Production = 'production',
+  Staging = 'staging',
 }
 
 interface ServerConfig {
-  summaryUrl: string;
+  apiUrl: string;
 }
 
 const serverEnvironments: {
@@ -16,16 +16,16 @@ const serverEnvironments: {
   production: ServerConfig;
 } = {
   [EnvType.Local]: {
-    summaryUrl: "https://api.covid19api.com/summary",
+    apiUrl: 'https://api.covid19api.com',
   },
   [EnvType.Development]: {
-    summaryUrl: "https://api.covid19api.com/summary",
+    apiUrl: 'https://api.covid19api.com',
   },
   [EnvType.Staging]: {
-    summaryUrl: "https://api.covid19api.com/summary",
+    apiUrl: 'https://api.covid19api.com',
   },
   [EnvType.Production]: {
-    summaryUrl: "https://api.covid19api.com/summary",
+    apiUrl: 'https://api.covid19api.com',
   },
 };
 
@@ -36,8 +36,7 @@ export const Env: EnvType = process.env.NODE_ENV as EnvType;
 export const BuildEnv = process.env.REACT_APP_BUILD;
 
 // Env is development
-export const __DEV__: boolean =
-  Env === EnvType.Development || BuildEnv === EnvType.Development;
+export const __DEV__: boolean = Env === EnvType.Development || BuildEnv === EnvType.Development;
 
 // Env is staging
 export const __STAG__: boolean = BuildEnv === EnvType.Staging;

@@ -1,25 +1,25 @@
 import React, { FC, useCallback, useEffect } from 'react';
+import { Layout } from 'antd';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import { Dispatch } from '../models/dispatch';
 import { GlobalState, CountrySummary } from '../models/global';
+
 import SearchBar from '../components/SearchBar';
-import { RouteConfig } from '../routes/config';
+import CountryTable from '../components/CountryTable';
 
 import styles from './Home.module.scss';
-import { CountryTable } from '../components/CountryTable';
-import { Layout } from 'antd';
 
 interface Props {
-  app: any;
-  routes: RouteConfig[];
-  globalSummary: GlobalState;
-  countriesSummary: CountrySummary[];
-  lastUpdated: string;
   loading: boolean;
+  globalSummary: GlobalState;
+  countries: CountrySummary[];
+  lastUpdated: string;
   getSummary: () => void;
+  viewCountryDetails: (slug: string) => void;
 }
 
-export const Home: FC<Props> = ({ app, routes, globalSummary, countriesSummary, lastUpdated, loading, getSummary }) => {
+export const Home: FC<Props> = ({ countries, getSummary, loading, viewCountryDetails }) => {
   const getSummaryCB = useCallback(() => {
     getSummary();
   }, [getSummary]);
@@ -31,14 +31,14 @@ export const Home: FC<Props> = ({ app, routes, globalSummary, countriesSummary, 
   return (
     <Layout className={styles.page}>
       <SearchBar />
-      <CountryTable loading={loading} countries={countriesSummary} />
+      <CountryTable countries={countries} loading={loading} viewCountryDetails={viewCountryDetails} />
     </Layout>
   );
 };
 
 const mapStateToProps = ({ global, loading }: any) => ({
   globalSummary: global.summary,
-  countriesSummary: global.countries,
+  countries: global.countries,
   lastUpdated: global.date,
   loading: loading.effects['global/fetchSummary'] || loading.effects['global/sortCountries'],
 });
@@ -46,6 +46,9 @@ const mapStateToProps = ({ global, loading }: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getSummary: () => {
     dispatch({ type: 'global/fetchSummary' });
+  },
+  viewCountryDetails: (slug: string) => {
+    dispatch(routerRedux.push(`/summary/${slug}`));
   },
 });
 
