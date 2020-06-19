@@ -1,20 +1,23 @@
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC, useEffect, useCallback, useState } from 'react';
 import { Typography, Layout } from 'antd';
 import { connect } from 'dva';
 import { split } from 'lodash';
-import { RouteComponentProps } from 'dva/router';
 import { Dispatch } from '../models/dispatch';
 
 import styles from './Country.module.scss';
+import { CountryDailyStat } from '../models/global';
 
-interface Props extends RouteComponentProps {
+interface Props {
+  countryStats: CountryDailyStat[];
   countryUrl: string;
   getCountrySummary: (slug: string) => void;
 }
 
 const { Title } = Typography;
 
-const Country: FC<Props> = ({ countryUrl, getCountrySummary }) => {
+const Country: FC<Props> = ({ countryStats, countryUrl, getCountrySummary }) => {
+  const [name, setName] = useState<string>('');
+
   const loadData = useCallback(() => {
     const [, , slug] = split(countryUrl, '/', 3);
     getCountrySummary(slug);
@@ -24,15 +27,21 @@ const Country: FC<Props> = ({ countryUrl, getCountrySummary }) => {
     loadData();
   }, [loadData]);
 
+  useEffect(() => {
+    if (countryStats.length) {
+      setName(countryStats[0].country);
+    }
+  }, [countryStats, setName]);
+
   return (
     <Layout className={styles.page}>
-      <Title>Country Works</Title>
+      <Title>{name}</Title>
     </Layout>
   );
 };
 
 const mapStateToProps = ({ global, routing, loading }: any) => ({
-  countrySummary: global.countrySummary,
+  countryStats: global.countrySummary,
   countryUrl: routing.location.pathname,
   loading: loading.effects['global/fetchSummary'] || loading.effects['global/sortCountries'],
 });

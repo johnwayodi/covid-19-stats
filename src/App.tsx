@@ -5,7 +5,7 @@ import { Redirect, Route, routerRedux, Switch } from 'dva/router';
 import { Dispatch } from './models/dispatch';
 
 import Home from './pages/Home';
-import Country from './components/Country';
+import Country from './pages/Country';
 import NavBar from './components/NavBar';
 
 import styles from './App.module.scss';
