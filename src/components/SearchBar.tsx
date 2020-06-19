@@ -1,7 +1,5 @@
 import React, { FC, useCallback, useState, useEffect } from 'react';
 import { AutoComplete, Select, Row, Typography } from 'antd';
-import { connect } from 'dva';
-import { Dispatch } from '../models/dispatch';
 import { CountrySummary } from '../models/global';
 
 import styles from './SearchBar.module.scss';
@@ -29,10 +27,6 @@ const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries }) => 
   const [searchValue, setSearchValue] = useState<string>('');
   const [sortKey, setSortKey] = useState<string>('');
 
-  const resultCB = useCallback(() => {
-    setResult(countries);
-  }, [countries, setResult]);
-
   const filterCB = useCallback(() => {
     filterCountries(searchValue);
   }, [searchValue, filterCountries]);
@@ -42,8 +36,8 @@ const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries }) => 
   }, [sortKey, sortCountries]);
 
   useEffect(() => {
-    resultCB();
-  }, [resultCB]);
+    setResult(countries);
+  }, [countries]);
 
   useEffect(() => {
     filterCB();
@@ -65,11 +59,12 @@ const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries }) => 
     <Row className={styles.searchSection}>
       <Row className={styles.searchBar}>
         <AutoComplete className={styles.searchInput} onSearch={handleSearch} placeholder="Search Country">
-          {result.map((result) => (
-            <Option key={result.country} value={result.country}>
-              {result.country}
-            </Option>
-          ))}
+          {result &&
+            result.map((result) => (
+              <Option key={result.country} value={result.country}>
+                {result.country}
+              </Option>
+            ))}
         </AutoComplete>
       </Row>
       <Row className={styles.sortSection}>
@@ -86,19 +81,4 @@ const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries }) => 
   );
 };
 
-const mapStateToProps = ({ global, loading }: any) => ({
-  countries: global.searchResults,
-  loading: loading.effects['global/searchCountry'],
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  filterCountries: (name: string) => {
-    dispatch({ type: 'global/searchCountry', payload: { name } });
-  },
-
-  sortCountries: (key: string) => {
-    dispatch({ type: 'global/sortCountries', payload: { key } });
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default SearchBar;

@@ -14,12 +14,17 @@ interface Props {
   loading: boolean;
   globalSummary: GlobalState;
   countries: CountrySummary[];
+  countrySearch: CountrySummary[];
   lastUpdated: string;
   getSummary: () => void;
   viewCountryDetails: (slug: string) => void;
+  filterCountries: (name: string) => void;
+  sortCountries: (key: string) => void;
 }
 
-export const Home: FC<Props> = ({ countries, getSummary, loading, viewCountryDetails }) => {
+export const Home: FC<Props> = (props) => {
+  const { getSummary } = props;
+
   const getSummaryCB = useCallback(() => {
     getSummary();
   }, [getSummary]);
@@ -30,8 +35,12 @@ export const Home: FC<Props> = ({ countries, getSummary, loading, viewCountryDet
 
   return (
     <Layout className={styles.page}>
-      <SearchBar />
-      <CountryTable countries={countries} loading={loading} viewCountryDetails={viewCountryDetails} />
+      <SearchBar
+        countries={props.countrySearch}
+        filterCountries={props.filterCountries}
+        sortCountries={props.sortCountries}
+      />
+      <CountryTable countries={props.countries} loading={props.loading} viewCountryDetails={props.viewCountryDetails} />
     </Layout>
   );
 };
@@ -39,6 +48,7 @@ export const Home: FC<Props> = ({ countries, getSummary, loading, viewCountryDet
 const mapStateToProps = ({ global, loading }: any) => ({
   globalSummary: global.summary,
   countries: global.countries,
+  countrySearch: global.searchResults,
   lastUpdated: global.date,
   loading: loading.effects['global/fetchSummary'] || loading.effects['global/sortCountries'],
 });
@@ -49,6 +59,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   viewCountryDetails: (slug: string) => {
     dispatch(routerRedux.push(`/summary/${slug}`));
+  },
+
+  filterCountries: (name: string) => {
+    dispatch({ type: 'global/searchCountry', payload: { name } });
+  },
+
+  sortCountries: (key: string) => {
+    dispatch({ type: 'global/sortCountries', payload: { key } });
   },
 });
 

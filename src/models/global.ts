@@ -86,7 +86,18 @@ export default {
         console.log('ERROR', error);
       }
     },
-
+    *sortCountries({ payload }: Action, { put, select }: Effects) {
+      const { key } = payload;
+      try {
+        const { countries } = yield select(({ global }: any): GlobalState => global);
+        yield put({
+          type: 'setCountries',
+          payload: orderBy(countries, [`${key}`], ['desc']),
+        });
+      } catch (error) {
+        console.log('ERROR', error);
+      }
+    },
     *searchCountry({ payload }: Action, { put, select }: Effects) {
       const { name } = payload;
       try {
@@ -100,18 +111,6 @@ export default {
         yield put({
           type: 'setSearchResult',
           payload: orderBy(results, ['country']),
-        });
-      } catch (error) {
-        console.log('ERROR', error);
-      }
-    },
-    *sortCountries({ payload }: Action, { put, select }: Effects) {
-      const { key } = payload;
-      try {
-        const { countries } = yield select(({ global }: any): GlobalState => global);
-        yield put({
-          type: 'setCountries',
-          payload: orderBy(countries, [`${key}`], ['desc']),
         });
       } catch (error) {
         console.log('ERROR', error);
