@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { createLogger } from 'redux-logger';
 import { __DEV__ } from './env';
-import { default as Global } from './models/global';
+import { Global, Country } from './models';
 import App from './App';
 
 import './index.scss';
@@ -35,5 +35,6 @@ app.router((props: any) => <App {...props} />);
 
 // Register dva global model
 app.model(Global);
+app.model(Country);
 
 app.start('#root');

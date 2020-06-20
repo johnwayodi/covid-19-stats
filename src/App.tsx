@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import { Redirect, Route, routerRedux, Switch } from 'dva/router';
 import { Dispatch } from './models/dispatch';
 
+import About from './pages/About';
 import Home from './pages/Home';
 import Country from './pages/Country';
 import NavBar from './components/NavBar';
@@ -31,6 +32,7 @@ const App: FC<Props> = ({ history }) => {
             <Route exact path="/" render={() => <Redirect to="/summary" push />} />
             <Route exact path="/summary" render={() => <Home />} />
             <Route exact path="/summary/:slug" render={() => <Country />} />
+            <Route exact path="/about" render={() => <About />} />
           </Switch>
         </Content>
       </Layout>

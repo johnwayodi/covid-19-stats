@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@ant-design/charts@^0.9.6":
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/@ant-design/charts/-/charts-0.9.6.tgz#02b1d2e6cf10f78b985f607a948d6ff6d8645c31"
+  integrity sha512-YHw6e6xEBYJAK5kwk8F35/p8tlyuSzExD6XbyDU1FCJdoCfdiSc1N4fcdJIWueYecwSUxC2voaeHlgl31cy3RQ==
+  dependencies:
+    "@antv/g2plot" "~1.1.2"
+
 "@ant-design/colors@^3.1.0":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-3.2.2.tgz#5ad43d619e911f3488ebac303d606e66a8423903"
@@ -173,7 +180,7 @@
     "@antv/util" "~2.0.5"
     tslib "^2.0.0"
 
-"@antv/g2plot@^1.1.7":
+"@antv/g2plot@~1.1.2":
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/@antv/g2plot/-/g2plot-1.1.7.tgz#dcfa55c5ccc829f8a9d7fdf50065c0ec45ff64ee"
   integrity sha512-pv++dFQjoBX39U0bif9aEQ6uLSROq9lFonwPeVP2+7hQwkyIggUC/bCs5PdxuCWWIJ/Vp/NXxC3GshIyXu/6Qw==
@@ -7991,6 +7998,11 @@ moment@^2.24.0, moment@^2.25.3:
   version "2.26.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.26.0.tgz#5e1f82c6bafca6e83e808b30c8705eed0dcbd39a"
   integrity sha512-oIixUO+OamkUkwjhAVE18rAMfRJNsNe/Stid/gwHSOfHrOtw9EhAY2AHvdKZ/k/MggcYELFCJz/Sn2pL8b8JMw==
+
+moment@^2.27.0:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
 
 move-concurrently@^1.0.1:
   version "1.0.1"

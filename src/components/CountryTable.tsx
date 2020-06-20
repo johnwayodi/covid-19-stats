@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
 import { Statistic, Table } from 'antd';
 import { forEach } from 'lodash';
-import { CountrySummary } from '../models/global';
+import { CountrySummary } from '../models/interfaces';
 
 import styles from './CountryTable.module.scss';
 
