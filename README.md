@@ -21,6 +21,8 @@ for development and testing purposes.
 
 ## 🔧 Features
 
+Consumes this [API](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest)
+
 - [x] Global statistics.
 - [x] Country statistics.
 - [ ] Graphical & Chart representations.
