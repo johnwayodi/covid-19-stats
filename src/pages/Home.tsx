@@ -3,12 +3,12 @@ import { Layout } from 'antd';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { Dispatch } from '../models/dispatch';
-import { GlobalState, CountrySummary } from '../models/global';
 
 import SearchBar from '../components/SearchBar';
 import CountryTable from '../components/CountryTable';
 
 import styles from './Home.module.scss';
+import { GlobalState, CountrySummary } from '../models/interfaces';
 
 interface Props {
   loading: boolean;

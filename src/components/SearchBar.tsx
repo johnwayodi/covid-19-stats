@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState, useEffect } from 'react';
 import { AutoComplete, Select, Row, Typography } from 'antd';
-import { CountrySummary } from '../models/global';
+import { CountrySummary } from '../models/interfaces';
 
 import styles from './SearchBar.module.scss';
 

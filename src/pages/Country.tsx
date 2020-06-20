@@ -1,54 +1,53 @@
-import React, { FC, useEffect, useCallback, useState } from 'react';
-import { Typography, Layout } from 'antd';
+import React, { FC, useEffect, useCallback } from 'react';
+import { Layout, Row, Typography } from 'antd';
 import { connect } from 'dva';
 import { split } from 'lodash';
 import { Dispatch } from '../models/dispatch';
+import { WeekTrendChartType } from '../models/interfaces';
+import WeekTrendChart from '../components/WeekTrendChart';
 
 import styles from './Country.module.scss';
-import { CountryDailyStat } from '../models/global';
 
 interface Props {
-  countryStats: CountryDailyStat[];
+  countrySlug: string;
+  countryName: string;
+  weekTrendStats: WeekTrendChartType[];
   countryUrl: string;
-  getCountrySummary: (slug: string) => void;
+  loading: boolean;
+  getWeekSummary: (slug: string) => void;
 }
 
 const { Title } = Typography;
 
-const Country: FC<Props> = ({ countryStats, countryUrl, getCountrySummary }) => {
-  const [name, setName] = useState<string>('');
-
+const Country: FC<Props> = ({ countryName, countryUrl, getWeekSummary, loading, weekTrendStats }) => {
   const loadData = useCallback(() => {
     const [, , slug] = split(countryUrl, '/', 3);
-    getCountrySummary(slug);
-  }, [countryUrl, getCountrySummary]);
+    getWeekSummary(slug);
+  }, [countryUrl, getWeekSummary]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  useEffect(() => {
-    if (countryStats.length) {
-      setName(countryStats[0].country);
-    }
-  }, [countryStats, setName]);
-
   return (
     <Layout className={styles.page}>
-      <Title>{name}</Title>
+      <Row className={styles.title}>{countryName && <Title level={3}>{countryName}</Title>}</Row>
+      <WeekTrendChart weekTrendStats={weekTrendStats} loading={loading} />
     </Layout>
   );
 };
 
-const mapStateToProps = ({ global, routing, loading }: any) => ({
-  countryStats: global.countrySummary,
+const mapStateToProps = ({ country, loading, routing }: any) => ({
+  countrySlug: country.countrySlug,
+  countryName: country.countryName,
+  weekTrendStats: country.weekTrendStats,
   countryUrl: routing.location.pathname,
-  loading: loading.effects['global/fetchSummary'] || loading.effects['global/sortCountries'],
+  loading: loading.effects['country/fetchWeekSummary'],
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getCountrySummary: (slug: string) => {
-    dispatch({ type: 'global/fetchCountrySummary', payload: { slug } });
+  getWeekSummary: (slug: string) => {
+    dispatch({ type: 'country/fetchWeekSummary', payload: { slug } });
   },
 });
 

@@ -3,5 +3,12 @@
 .page {
   font-family: Georgia, sans-serif;
   text-align: center;
-  padding-top: 16px;
+  padding: 16px;
+  height: 94vh;
+  min-height: 94vh;
+  width: 100%;
+}
+
+.title {
+  height: 60px;
 }
