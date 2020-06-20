@@ -2,51 +2,7 @@ import humps from 'humps';
 import { forEach, lowerCase, startsWith, orderBy } from 'lodash';
 import { Action, Effects } from './dispatch';
 import { ApiService } from '../services/api.service';
-
-export interface CountrySummary {
-  country: string;
-  countryCode: string;
-  slug: string;
-  newConfirmed: number;
-  totalConfirmed: number;
-  newDeaths: number;
-  totalDeaths: number;
-  newRecovered: number;
-  totalRecovered: number;
-  date: string;
-}
-
-export interface GlobalSummary {
-  newConfirmed: number;
-  totalConfirmed: number;
-  newDeaths: number;
-  totalDeaths: number;
-  newRecovered: number;
-  totalRecovered: number;
-}
-
-export interface CountryDailyStat {
-  active: number;
-  city?: string;
-  cityCode?: string;
-  confirmed: number;
-  country: string;
-  countryCode: string;
-  date: string;
-  deaths: 100;
-  lat: string;
-  lon: string;
-  province?: string;
-  recovered: number;
-}
-
-export interface GlobalState {
-  summary: GlobalSummary;
-  countries: CountrySummary[];
-  searchResults: CountrySummary[];
-  countrySummary: CountryDailyStat[];
-  date: string;
-}
+import { GlobalState } from './interfaces';
 
 const initialState: GlobalState = {
   summary: {
