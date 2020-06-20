@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Menu, Row, Typography } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { Link } from 'dva/router';
+import { ProfileOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
 
 import styles from './NavBar.module.scss';
 
@@ -15,21 +16,15 @@ const NavBar: FC = () => {
       </Row>
       <Row className={styles.navMenu}>
         <Menu selectedKeys={['mail']} mode="horizontal">
-          <Menu.Item key="mail" icon={<MailOutlined />}>
-            Summary
+          <Menu.Item key="mail" icon={<UnorderedListOutlined />}>
+            <Link to="/summary">Summary</Link>
           </Menu.Item>
-          <Menu.Item key="app" icon={<AppstoreOutlined />}>
-            About
+          <Menu.Item key="app" icon={<ProfileOutlined />}>
+            <Link to="/about">About</Link>
           </Menu.Item>
           <SubMenu icon={<SettingOutlined />} title="Settings">
-            <Menu.ItemGroup title="Item 1">
-              <Menu.Item key="setting:1">Option 1</Menu.Item>
-              <Menu.Item key="setting:2">Option 2</Menu.Item>
-            </Menu.ItemGroup>
-            <Menu.ItemGroup title="Item 2">
-              <Menu.Item key="setting:3">Option 3</Menu.Item>
-              <Menu.Item key="setting:4">Option 4</Menu.Item>
-            </Menu.ItemGroup>
+            <Menu.Item key="setting:1">Option 1</Menu.Item>
+            <Menu.Item key="setting:2">Option 2</Menu.Item>
           </SubMenu>
         </Menu>
       </Row>
