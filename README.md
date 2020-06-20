@@ -3,8 +3,9 @@
 ## 🚗 Getting Started
 
 ```Note
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will get you a copy of the
+project up and running on your local machine
+for development and testing purposes.
 ```
 
 ## 🔨 Prerequisites
@@ -14,10 +15,14 @@ These instructions will get you a copy of the project up and running on your loc
 - yarn >= 1.14.0 or npm >= 6.7.0
 - git >= 2.10.1
 
+## Sample
+
+![Screenshot](src/assets/home.png)
+
 ## 🔧 Features
 
-- [ ] Global statistics.
-- [ ] Country statistics.
+- [x] Global statistics.
+- [x] Country statistics.
 - [ ] Graphical & Chart representations.
 - [ ] Rss integration.
 
