@@ -4,4 +4,4 @@ export { default as CountryTimeline } from './CountryFeed';
 export { default as CountryTotalNumbers } from './CountryTotalNumbers';
 export { default as NavBar } from './NavBar';
 export { default as SearchBar } from './SearchBar';
-export { default as WeekTrendChart } from './WeekTrendChart';
+export { default as MonthTrendChart } from './MonthTrendChart';

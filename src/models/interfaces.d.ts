@@ -38,5 +38,5 @@ export interface GlobalState {
 export interface CountryState {
   countrySlug: string;
   countryName: string;
-  weekSummary: DailyReport[];
+  monthSummary: DailyReport[];
 }
