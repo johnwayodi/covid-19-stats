@@ -20,8 +20,8 @@ export class ApiService {
 
   public static async getCountrySummary(slug: string, status: string) {
     try {
-      const fromDate = moment().startOf('day').subtract(20, 'days').toISOString();
-      const toDate = moment().startOf('day').subtract(5, 'days').toISOString();
+      const fromDate = moment().startOf('day').subtract(30, 'days').toISOString();
+      const toDate = moment().startOf('day').toISOString();
       const response = await request(`${serverEnv.apiUrl}/total/country/${slug}/status/${status}`, {
         method: 'get',
         params: {
