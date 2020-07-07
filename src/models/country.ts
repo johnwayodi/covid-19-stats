@@ -6,14 +6,14 @@ import { formatWeekTrendData } from '../utils/formatData';
 const initialState: CountryState = {
   countrySlug: '',
   countryName: '',
-  weekSummary: [],
+  monthSummary: [],
 };
 
 export default {
   namespace: 'country',
   state: initialState,
   effects: {
-    *fetchWeekSummary({ payload }: Action, { call, put, select }: Effects) {
+    *fetchMonthSummary({ payload }: Action, { call, put, select }: Effects) {
       const { slug } = payload;
       try {
         yield put({ type: 'setCountrySlug', payload: slug });
@@ -24,7 +24,7 @@ export default {
         const [result, name] = formatWeekTrendData(confirmed, recovered, deaths);
 
         yield put({ type: 'setCountryName', payload: name });
-        yield put({ type: 'setWeekSummary', payload: result });
+        yield put({ type: 'setMonthSummary', payload: result });
       } catch (error) {
         console.log('ERROR', error);
       }
@@ -37,8 +37,8 @@ export default {
     setCountryName(state: CountryState, { payload }: Action): CountryState {
       return { ...state, countryName: payload };
     },
-    setWeekSummary(state: CountryState, { payload }: Action): CountryState {
-      return { ...state, weekSummary: payload };
+    setMonthSummary(state: CountryState, { payload }: Action): CountryState {
+      return { ...state, monthSummary: payload };
     },
     setDefault(state: CountryState): CountryState {
       return { ...state, ...initialState };

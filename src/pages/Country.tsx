@@ -4,28 +4,27 @@ import { connect } from 'dva';
 import { split } from 'lodash';
 import { Dispatch } from '../models/dispatch';
 import { DailyReport } from '../models/interfaces';
-import { CountryLatestNumbers, CountryTotalNumbers, CountryTimeline, WeekTrendChart } from '../components';
+import { CountryLatestNumbers, CountryTotalNumbers, CountryTimeline, MonthTrendChart } from '../components';
 
 import styles from './Country.module.scss';
 
 interface Props {
-  countrySlug: string;
   countryName: string;
-  weekSummary: DailyReport[];
+  monthSummary: DailyReport[];
   countryUrl: string;
   loading: boolean;
-  getWeekSummary: (slug: string) => void;
+  getMonthSummary: (slug: string) => void;
 }
 
 const { Title } = Typography;
 
-const Country: FC<Props> = ({ countryName, countryUrl, getWeekSummary, loading, weekSummary }) => {
+const Country: FC<Props> = ({ countryName, countryUrl, getMonthSummary, loading, monthSummary }) => {
   useEffect(() => {
     const [, , slug] = split(countryUrl, '/', 3);
     if (slug) {
-      getWeekSummary(slug);
+      getMonthSummary(slug);
     }
-  }, [countryUrl, getWeekSummary]);
+  }, [countryUrl, getMonthSummary]);
 
   return (
     <Layout className={styles.page}>
@@ -38,7 +37,7 @@ const Country: FC<Props> = ({ countryName, countryUrl, getWeekSummary, loading, 
           <CountryTotalNumbers loading={loading} />
         </Row>
         <Row className={styles.trend}>
-          <WeekTrendChart loading={loading} weekSummary={weekSummary} />
+          <MonthTrendChart loading={loading} monthSummary={monthSummary} />
         </Row>
       </Row>
       <Row className={styles.timeline}>
@@ -51,14 +50,14 @@ const Country: FC<Props> = ({ countryName, countryUrl, getWeekSummary, loading, 
 const mapStateToProps = ({ country, loading, routing }: any) => ({
   countrySlug: country.countrySlug,
   countryName: country.countryName,
-  weekSummary: country.weekSummary,
+  monthSummary: country.monthSummary,
   countryUrl: routing.location.pathname,
-  loading: loading.effects['country/fetchWeekSummary'],
+  loading: loading.effects['country/fetchMonthSummary'],
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getWeekSummary: (slug: string) => {
-    dispatch({ type: 'country/fetchWeekSummary', payload: { slug } });
+  getMonthSummary: (slug: string) => {
+    dispatch({ type: 'country/fetchMonthSummary', payload: { slug } });
   },
 });
 
