@@ -1,0 +1,10 @@
+@import '../styles/global';
+
+.item {
+  height: 148px;
+  width: 50%;
+
+  @include respond-to('xs-l') {
+    width: 100%;
+  }
+}

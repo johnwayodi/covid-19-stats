@@ -1,14 +1,13 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Layout } from 'antd';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { Dispatch } from '../models/dispatch';
 
-import SearchBar from '../components/SearchBar';
-import CountryTable from '../components/CountryTable';
+import { SearchBar, CountryTable } from '../components';
+import { GlobalState, CountrySummary } from '../models/interfaces';
 
 import styles from './Home.module.scss';
-import { GlobalState, CountrySummary } from '../models/interfaces';
 
 interface Props {
   loading: boolean;
@@ -17,7 +16,7 @@ interface Props {
   countrySearch: CountrySummary[];
   lastUpdated: string;
   getSummary: () => void;
-  viewCountryDetails: (slug: string) => void;
+  viewCountryDetails: (code: string) => void;
   filterCountries: (name: string) => void;
   sortCountries: (key: string) => void;
 }
@@ -25,13 +24,9 @@ interface Props {
 export const Home: FC<Props> = (props) => {
   const { getSummary } = props;
 
-  const getSummaryCB = useCallback(() => {
+  useEffect(() => {
     getSummary();
   }, [getSummary]);
-
-  useEffect(() => {
-    getSummaryCB();
-  }, [getSummaryCB]);
 
   return (
     <Layout className={styles.page}>

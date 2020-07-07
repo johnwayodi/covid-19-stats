@@ -1,17 +1,17 @@
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Layout, Row, Typography } from 'antd';
 import { connect } from 'dva';
 import { split } from 'lodash';
 import { Dispatch } from '../models/dispatch';
-import { WeekTrendChartType } from '../models/interfaces';
-import WeekTrendChart from '../components/WeekTrendChart';
+import { DailyReport } from '../models/interfaces';
+import { CountryLatestNumbers, CountryTotalNumbers, CountryTimeline, WeekTrendChart } from '../components';
 
 import styles from './Country.module.scss';
 
 interface Props {
   countrySlug: string;
   countryName: string;
-  weekTrendStats: WeekTrendChartType[];
+  weekSummary: DailyReport[];
   countryUrl: string;
   loading: boolean;
   getWeekSummary: (slug: string) => void;
@@ -19,20 +19,31 @@ interface Props {
 
 const { Title } = Typography;
 
-const Country: FC<Props> = ({ countryName, countryUrl, getWeekSummary, loading, weekTrendStats }) => {
-  const loadData = useCallback(() => {
-    const [, , slug] = split(countryUrl, '/', 3);
-    getWeekSummary(slug);
-  }, [countryUrl, getWeekSummary]);
-
+const Country: FC<Props> = ({ countryName, countryUrl, getWeekSummary, loading, weekSummary }) => {
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    const [, , slug] = split(countryUrl, '/', 3);
+    if (slug) {
+      getWeekSummary(slug);
+    }
+  }, [countryUrl, getWeekSummary]);
 
   return (
     <Layout className={styles.page}>
-      <Row className={styles.title}>{countryName && <Title level={3}>{countryName}</Title>}</Row>
-      <WeekTrendChart weekTrendStats={weekTrendStats} loading={loading} />
+      <Row className={styles.title}>
+        <Title level={4}>{countryName}</Title>
+      </Row>
+      <Row className={styles.details}>
+        <Row className={styles.numbers}>
+          <CountryLatestNumbers loading={loading} />
+          <CountryTotalNumbers loading={loading} />
+        </Row>
+        <Row className={styles.trend}>
+          <WeekTrendChart loading={loading} weekSummary={weekSummary} />
+        </Row>
+      </Row>
+      <Row className={styles.timeline}>
+        <CountryTimeline loading={loading} />
+      </Row>
     </Layout>
   );
 };
@@ -40,7 +51,7 @@ const Country: FC<Props> = ({ countryName, countryUrl, getWeekSummary, loading, 
 const mapStateToProps = ({ country, loading, routing }: any) => ({
   countrySlug: country.countrySlug,
   countryName: country.countryName,
-  weekTrendStats: country.weekTrendStats,
+  weekSummary: country.weekSummary,
   countryUrl: routing.location.pathname,
   loading: loading.effects['country/fetchWeekSummary'],
 });

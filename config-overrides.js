@@ -1,10 +1,11 @@
 /* config-overrides.js */
-const { override, fixBabelImports, addWebpackAlias } = require('customize-cra');
+const { addExternalBabelPlugin, addWebpackAlias, fixBabelImports, override } = require('customize-cra');
 
 const reactHotLoader = require('react-app-rewire-hot-loader');
 
 // Override Webpack default config
 module.exports = override(
+  addExternalBabelPlugin('recharts'),
   fixBabelImports('antd', {
     libraryName: 'antd',
     libraryDirectory: 'es',

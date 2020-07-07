@@ -1,3 +1,5 @@
+import humps from 'humps';
+import moment from 'moment';
 import request from 'umi-request';
 import { ServerEnv } from '../env';
 
@@ -9,23 +11,25 @@ export class ApiService {
       const response = await request(`${serverEnv.apiUrl}/summary`, {
         method: 'get',
       });
-      return response;
+      return humps.camelizeKeys(response);
     } catch (error) {
       console.log('Service Fail', error);
       return;
     }
   }
 
-  public static async getCountrySummary(slug: string) {
+  public static async getCountrySummary(slug: string, status: string) {
     try {
-      const response = await request(`${serverEnv.apiUrl}/country/${slug}`, {
+      const fromDate = moment().startOf('day').subtract(20, 'days').toISOString();
+      const toDate = moment().startOf('day').subtract(5, 'days').toISOString();
+      const response = await request(`${serverEnv.apiUrl}/total/country/${slug}/status/${status}`, {
         method: 'get',
         params: {
-          from: '2020-06-10T00:00:00Z',
-          to: '2020-06-18T00:00:00Z',
+          from: fromDate,
+          to: toDate,
         },
       });
-      return response;
+      return humps.camelizeKeys(response);
     } catch (error) {
       console.log('Service Fail', error);
       return;
