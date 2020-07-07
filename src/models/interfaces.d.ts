@@ -20,38 +20,23 @@ export interface GlobalSummary {
   totalRecovered: number;
 }
 
-export interface CountryDailyStat {
-  active: number;
-  city?: string;
-  cityCode?: string;
+export interface DailyReport {
+  date: string;
   confirmed: number;
-  country: string;
-  countryCode: string;
-  date: string;
-  deaths: number;
-  lat: string;
-  lon: string;
-  province?: string;
   recovered: number;
-}
-
-export interface WeekTrendChartType {
-  date: string;
-  type: string;
-  value: number;
+  deaths: number;
 }
 
 export interface GlobalState {
   summary: GlobalSummary;
   countries: CountrySummary[];
-  searchResults: CountrySummary[];
   countrySummary: CountryDailyStat[];
+  searchResults: CountrySummary[];
   date: string;
 }
 
 export interface CountryState {
   countrySlug: string;
   countryName: string;
-  weekSummary: CountryDailyStat[];
-  weekTrendStats: WeekTrendChartType[];
+  weekSummary: DailyReport[];
 }

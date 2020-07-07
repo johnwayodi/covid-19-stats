@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { AutoComplete, Select, Row, Typography } from 'antd';
 import { CountrySummary } from '../models/interfaces';
 
@@ -27,25 +27,17 @@ const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries }) => 
   const [searchValue, setSearchValue] = useState<string>('');
   const [sortKey, setSortKey] = useState<string>('');
 
-  const filterCB = useCallback(() => {
+  useEffect(() => {
     filterCountries(searchValue);
   }, [searchValue, filterCountries]);
-
-  const sortCB = useCallback(() => {
-    sortCountries(sortKey);
-  }, [sortKey, sortCountries]);
 
   useEffect(() => {
     setResult(countries);
   }, [countries]);
 
   useEffect(() => {
-    filterCB();
-  }, [filterCB]);
-
-  useEffect(() => {
-    sortCB();
-  }, [sortCB]);
+    sortCountries(sortKey);
+  }, [sortKey, sortCountries]);
 
   const handleSearch = (value: string) => {
     setSearchValue(value);

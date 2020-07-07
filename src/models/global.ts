@@ -1,4 +1,3 @@
-import humps from 'humps';
 import { forEach, lowerCase, startsWith, orderBy } from 'lodash';
 import { Action, Effects } from './dispatch';
 import { ApiService } from '../services/api.service';
@@ -27,15 +26,13 @@ export default {
       try {
         const response = yield call(ApiService.getSummary);
         if (response) {
-          const data: any = humps.camelizeKeys(response);
-          const { global, countries } = data;
           yield put({
             type: 'setSummary',
-            payload: global,
+            payload: response.global,
           });
           yield put({
             type: 'setCountries',
-            payload: orderBy(countries, ['totalDeaths'], ['desc']),
+            payload: orderBy(response.countries, ['totalDeaths'], ['desc']),
           });
         }
       } catch (error) {
@@ -77,12 +74,10 @@ export default {
       try {
         const response = yield call(ApiService.getCountrySummary, slug);
         if (response) {
-          const data: any = humps.camelizeKeys(response);
-          console.log('Country Data', data);
           // const { global, countries } = data;
           yield put({
             type: 'setCountryResult',
-            payload: data,
+            payload: response,
           });
           // yield put({
           //   type: 'setCountries',
