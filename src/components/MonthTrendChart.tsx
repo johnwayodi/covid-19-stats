@@ -14,7 +14,7 @@ const { Text } = Typography;
 
 const MonthTrendChart: FC<Props> = ({ loading, monthSummary }) => {
   return (
-    <Card className={styles.chart} loading={loading} title={<Text>Last 7 Days</Text>}>
+    <Card className={styles.chart} loading={loading} title={<Text>Last 30 Days</Text>}>
       <ResponsiveContainer width="100%" height={600}>
         <AreaChart width={600} height={250} data={monthSummary} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <defs>

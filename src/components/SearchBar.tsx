@@ -7,6 +7,7 @@ import styles from './SearchBar.module.scss';
 interface Props {
   countries: CountrySummary[];
   filterCountries: (name: string) => void;
+  viewSelected: (slug: string) => void;
   sortCountries: (key: string) => void;
 }
 
@@ -22,7 +23,7 @@ const sortOptions = [
   { value: 'totalDeaths', text: 'Total Deaths' },
 ];
 
-const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries }) => {
+const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries, viewSelected }) => {
   const [result, setResult] = useState<CountrySummary[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const [sortKey, setSortKey] = useState<string>('');
@@ -47,10 +48,22 @@ const SearchBar: FC<Props> = ({ countries, filterCountries, sortCountries }) => 
     setSortKey(value);
   };
 
+  const handleSelected = (value: string) => {
+    const country = countries.find((element) => element.country === value);
+    if (country) {
+      console.log('COUNTRY', country);
+      viewSelected(country.slug);
+    }
+  };
   return (
     <Row className={styles.searchSection}>
       <Row className={styles.searchBar}>
-        <AutoComplete className={styles.searchInput} onSearch={handleSearch} placeholder="Search Country">
+        <AutoComplete
+          className={styles.searchInput}
+          onSearch={handleSearch}
+          onSelect={(value: string) => handleSelected(value)}
+          placeholder="Search Country"
+        >
           {result &&
             result.map((result) => (
               <Option key={result.country} value={result.country}>
