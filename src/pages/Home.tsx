@@ -33,6 +33,7 @@ export const Home: FC<Props> = (props) => {
       <SearchBar
         countries={props.countrySearch}
         filterCountries={props.filterCountries}
+        viewSelected={props.viewCountryDetails}
         sortCountries={props.sortCountries}
       />
       <CountryTable countries={props.countries} loading={props.loading} viewCountryDetails={props.viewCountryDetails} />
