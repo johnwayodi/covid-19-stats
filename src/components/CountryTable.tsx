@@ -20,18 +20,26 @@ const columns = [
     title: 'Country',
     dataIndex: 'country',
     key: 'country',
-    render: (text: string) => <Statistic valueStyle={{ fontSize: 14 }} value={text} />,
+    render: (text: string, record: TableItem) => (
+      <Statistic
+        valueStyle={{ fontSize: 14 }}
+        prefix={
+          <img
+            src={'https://www.countryflags.io/' + record.countryCode + '/flat/48.png'}
+            loading="eager"
+            width="32"
+            height="32"
+            alt={record.countryCode}
+          />
+        }
+        value={text}
+      />
+    ),
   },
   {
     title: 'New Cases',
     dataIndex: 'newConfirmed',
     key: 'newConfirmed',
-    render: (text: string) => <Statistic valueStyle={{ fontSize: 14 }} value={text} />,
-  },
-  {
-    title: 'New Recovered',
-    dataIndex: 'newRecovered',
-    key: 'newRecovered',
     render: (text: string) => <Statistic valueStyle={{ fontSize: 14 }} value={text} />,
   },
   {
@@ -44,12 +52,6 @@ const columns = [
     title: 'Total Cases',
     dataIndex: 'totalConfirmed',
     key: 'totalConfirmed',
-    render: (text: string) => <Statistic valueStyle={{ fontSize: 14 }} value={text} />,
-  },
-  {
-    title: 'Total Recovered',
-    dataIndex: 'totalRecovered',
-    key: 'totalRecovered',
     render: (text: string) => <Statistic valueStyle={{ fontSize: 14 }} value={text} />,
   },
   {
@@ -85,19 +87,15 @@ export const CountryTable: FC<Props> = (props) => {
       dataSource={tableItems}
       loading={loading}
       pagination={{
-        position: ['bottomLeft'],
+        position: ['bottomRight'],
         showLessItems: true,
         showSizeChanger: false,
       }}
       onRow={(record, rowIndex) => {
         return {
-          onClick: (event) => {
+          onClick: () => {
             viewCountryDetails(record.slug);
           },
-          onDoubleClick: (event) => {},
-          onContextMenu: (event) => {},
-          onMouseEnter: (event) => {},
-          onMouseLeave: (event) => {},
         };
       }}
     />
