@@ -17,9 +17,6 @@ const CountryLatestNumbers: FC<Props> = ({ loading, data }) => {
           <Statistic title="Confirmed" value={data && data.newConfirmed} valueStyle={{ fontSize: '20px' }} />
         </div>
         <div className={styles.statItem}>
-          <Statistic title="Recovered" value={data && data.newRecovered} valueStyle={{ fontSize: '20px' }} />
-        </div>
-        <div className={styles.statItem}>
           <Statistic title="Deaths" value={data && data.newDeaths} valueStyle={{ fontSize: '20px' }} />
         </div>
       </Row>
