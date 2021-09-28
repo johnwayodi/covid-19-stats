@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { Dispatch } from '../models/dispatch';
 
-import { SearchBar, CountryTable } from '../components';
+import { CountryTable } from '../components';
 import { GlobalState, CountrySummary } from '../models/interfaces';
 
 import styles from './Home.module.scss';
@@ -19,23 +19,19 @@ interface Props {
   viewCountryDetails: (code: string) => void;
   filterCountries: (name: string) => void;
   sortCountries: (key: string) => void;
+  enableSort: () => void;
 }
 
 export const Home: FC<Props> = (props) => {
-  const { getSummary } = props;
+  const { getSummary, enableSort } = props;
 
   useEffect(() => {
     getSummary();
-  }, [getSummary]);
+    enableSort();
+  }, [getSummary, enableSort]);
 
   return (
     <Layout className={styles.page}>
-      <SearchBar
-        countries={props.countrySearch}
-        filterCountries={props.filterCountries}
-        viewSelected={props.viewCountryDetails}
-        sortCountries={props.sortCountries}
-      />
       <CountryTable countries={props.countries} loading={props.loading} viewCountryDetails={props.viewCountryDetails} />
     </Layout>
   );
@@ -56,11 +52,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   viewCountryDetails: (slug: string) => {
     dispatch(routerRedux.push(`/summary/${slug}`));
   },
-
   filterCountries: (name: string) => {
     dispatch({ type: 'global/searchCountry', payload: { name } });
   },
-
+  enableSort: () => {
+    dispatch({ type: 'country/activateSort', payload: {} });
+  },
   sortCountries: (key: string) => {
     dispatch({ type: 'global/sortCountries', payload: { key } });
   },

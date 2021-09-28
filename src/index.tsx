@@ -18,7 +18,7 @@ if (__DEV__) {
 }
 
 const app: any = dva({
-  history: createBrowserHistory(),
+  history: createBrowserHistory({ basename: '/covid-19-stats' }),
 
   onError(error: any) {
     // Catch redux action errors

@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Layout, Row, Typography } from 'antd';
 import { connect } from 'dva';
-import { split } from 'lodash';
 import { Dispatch } from '../models/dispatch';
 import { CountrySummary, DailyReport } from '../models/interfaces';
 import { CountryLatestNumbers, CountryTotalNumbers, MonthTrendChart } from '../components';
@@ -9,6 +8,7 @@ import { CountryLatestNumbers, CountryTotalNumbers, MonthTrendChart } from '../c
 import styles from './Country.module.scss';
 
 interface Props {
+  slug: string;
   countryName: string;
   monthSummary: DailyReport[];
   countryUrl: string;
@@ -19,42 +19,67 @@ interface Props {
 
 const { Title } = Typography;
 
-const Country: FC<Props> = ({ countryName, countryUrl, getMonthSummary, loading, monthSummary, countries }) => {
-  const [slug] = useState(split(countryUrl, '/', 3)[2]);
+const Country: FC<Props> = ({ slug, countryName, countryUrl, getMonthSummary, loading, monthSummary, countries }) => {
+  // const [slug, setSlug] = useState(split(countryUrl, '/', 3)[2]);
   const [countryInfo, setCountryInfo] = useState<any>();
   useEffect(() => {
-    if (slug) {
-      getMonthSummary(slug);
+    if (countryUrl) {
+      getMonthSummary(countryUrl);
     }
-  }, [slug, getMonthSummary]);
+  }, [countryUrl, getMonthSummary]);
+
+  // useEffect(() => {
+  //   const selectedSlug = split(countryUrl, '/', 3)[2];
+  //   if (selectedSlug !== slug) {
+  //     getMonthSummary(selectedSlug);
+  //   }
+  // }, [countryUrl, slug, getMonthSummary]);
 
   useEffect(() => {
     if (slug && countries.length) {
       const country = countries.find((element) => element.slug === slug);
+      console.log('COUNTRY', country);
       setCountryInfo(country);
     }
   }, [slug, countries]);
 
   return (
     <Layout className={styles.page}>
-      <Row className={styles.title}>
-        <Title level={4}>{countryName}</Title>
-      </Row>
-      <Row className={styles.details}>
-        <Row className={styles.numbers}>
-          <CountryLatestNumbers loading={loading} data={countryInfo} />
-          <CountryTotalNumbers loading={loading} data={countryInfo} />
-        </Row>
-        <Row className={styles.trend}>
-          <MonthTrendChart loading={loading} monthSummary={monthSummary} />
-        </Row>
+      <div className={styles.detailSection}>
+        <div className={styles.infoSection}>
+          <Row className={styles.title}>
+            <Title level={4}>{countryName}</Title>
+            <div className={styles.flag}>
+              {countryInfo && (
+                <img
+                  src={'https://www.countryflags.io/' + countryInfo.countryCode + '/flat/64.png'}
+                  loading="eager"
+                  width="124"
+                  height="124"
+                  alt={countryInfo.countryCode}
+                />
+              )}
+            </div>
+          </Row>
+        </div>
+        <div className={styles.numbersSection}>
+          <Row className={styles.details}>
+            <Row className={styles.numbers}>
+              <CountryLatestNumbers loading={loading} data={countryInfo} />
+              <CountryTotalNumbers loading={loading} data={countryInfo} />
+            </Row>
+          </Row>
+        </div>
+      </div>
+      <Row className={styles.trend}>
+        <MonthTrendChart loading={loading} monthSummary={monthSummary} />
       </Row>
     </Layout>
   );
 };
 
 const mapStateToProps = ({ country, global, loading, routing }: any) => ({
-  countrySlug: country.countrySlug,
+  slug: country.countrySlug,
   countryName: country.countryName,
   monthSummary: country.monthSummary,
   countries: global.countries,

@@ -1,5 +1,6 @@
 {
   "name": "covid-19-stats",
+  "homepage": "https://johnwayodi.github.io/covid-19-stats",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -44,9 +45,10 @@
     "build:stg": "cross-env REACT_APP_BUILD=staging react-app-rewired build",
     "test": "react-app-rewired test --watchAll=false",
     "lint:check": "tslint 'src/**/*.ts*'",
-    "lint:fix": "tslint 'src/**/*.ts*' --fix"
+    "lint:fix": "tslint 'src/**/*.ts*' --fix",
+    "predeploy": "npm run build:prod",
+    "deploy": "gh-pages -d build"
   },
-  "engines": { "node" : "14.16.0" },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -70,6 +72,7 @@
     "babel-runtime": "^6.26.0",
     "cross-env": "^7.0.2",
     "customize-cra": "^1.0.0",
+    "gh-pages": "^3.2.3",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.10",
     "react-app-rewire-hot-loader": "^2.0.1",
