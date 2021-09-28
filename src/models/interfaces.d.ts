@@ -23,7 +23,7 @@ export interface GlobalSummary {
 export interface DailyReport {
   date: string;
   confirmed: number;
-  recovered: number;
+  recovered?: number;
   deaths: number;
 }
 
@@ -38,5 +38,6 @@ export interface GlobalState {
 export interface CountryState {
   countrySlug: string;
   countryName: string;
+  sortVisible: boolean;
   monthSummary: DailyReport[];
 }
