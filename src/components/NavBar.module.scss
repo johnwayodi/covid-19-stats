@@ -4,7 +4,6 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  background-color: white;
   padding-right: 32px;
 
   @include respond-to('xs-l') {
@@ -13,10 +12,8 @@
 }
 
 .navTitle {
-  flex-grow: 1;
   align-content: center;
-  padding-left: 32px;
-  background-color: whitesmoke;
+  padding: 8px 32px 0 32px;
 }
 
 .navMenu {
